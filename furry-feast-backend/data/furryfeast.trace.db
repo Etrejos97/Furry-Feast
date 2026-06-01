@@ -1,6 +1,0 @@
-2026-06-01 15:13:34.049242-05:00 jdbc[3]: exception
-org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "USUARIOS" not found (this database is empty); SQL statement:
-INSERT INTO usuarios (id, nombre, cedula, email, password, role) SELECT 1, 'Administrador Principal', '1000000000', 'admin@furryfeast.com', '$2a$10$73Wik4pJ0xD7OIud88pt2.fF/UdjSuz5XgSZqz4pdbrBrBNvD1Kp6', 'ROLE_ADMIN' WHERE NOT EXISTS (SELECT 1 FROM usuarios WHERE email = 'admin@furryfeast.com') [42104-224]
-2026-06-01 15:15:47.691606-05:00 jdbc[3]: exception
-org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "USUARIOS" not found (this database is empty); SQL statement:
-INSERT INTO usuarios (id, nombre, cedula, email, password, role) SELECT 1, 'Administrador Principal', '1000000000', 'admin@furryfeast.com', '$2a$10$73Wik4pJ0xD7OIud88pt2.fF/UdjSuz5XgSZqz4pdbrBrBNvD1Kp6', 'ROLE_ADMIN' WHERE NOT EXISTS (SELECT 1 FROM usuarios WHERE email = 'admin@furryfeast.com') [42104-224]

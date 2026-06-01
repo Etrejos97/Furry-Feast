@@ -24,8 +24,8 @@ import Error404 from './pages/Error404';
 
 function App() {
   return (
-    <Router>
-      <AuthProvider>
+    <AuthProvider>
+      <Router>
         <VentaProvider>
           <Routes>
             {/* Rutas Públicas */}
@@ -50,8 +50,8 @@ function App() {
             <Route path="*" element={<Error404 />} />
           </Routes>
         </VentaProvider>
-      </AuthProvider>
-    </Router>
+      </Router>
+    </AuthProvider>
   );
 }
 

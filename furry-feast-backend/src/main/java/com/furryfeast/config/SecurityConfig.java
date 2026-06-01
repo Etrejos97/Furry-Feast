@@ -31,49 +31,42 @@ public class SecurityConfig {
     }
 
     @Bean
-    public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
+    public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration)
+            throws Exception {
         return authenticationConfiguration.getAuthenticationManager();
     }
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-            // Deshabilitar CSRF para APIs sin estado
-            .csrf(AbstractHttpConfigurer::disable)
-            
-            // Habilitar frameOptions para consola de H2
-            .headers(headers -> headers.frameOptions(HeadersConfigurer.FrameOptionsConfig::sameOrigin))
-            
-            // Configurar políticas de sesión sin estado
-            .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-            
-            // Configurar autorizaciones de endpoints
-            .authorizeHttpRequests(auth -> auth
-                // Rutas Públicas
-                .requestMatchers("/api/auth/login").permitAll()
-                .requestMatchers("/h2-console/**").permitAll()
-                .requestMatchers("/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html").permitAll()
-                
-                // Rutas que requieren ROLE_ADMIN
-                .requestMatchers("/api/ventas").hasRole("ADMIN")
-                .requestMatchers("/api/productos/alertas").authenticated() // Alertas de stock bajo
-                .requestMatchers("/api/productos/{id}/desactivar").hasRole("ADMIN")
-                .requestMatchers("/api/productos/{id}").authenticated()
-                .requestMatchers(org.springframework.http.HttpMethod.POST, "/api/productos").hasRole("ADMIN")
-                .requestMatchers(org.springframework.http.HttpMethod.PUT, "/api/productos/**").hasRole("ADMIN")
-                .requestMatchers(org.springframework.http.HttpMethod.PATCH, "/api/productos/**").hasRole("ADMIN")
-                
-                // Rutas que requieren estar autenticado (cualquier rol)
-                .requestMatchers(org.springframework.http.HttpMethod.GET, "/api/productos").authenticated()
-                .requestMatchers(org.springframework.http.HttpMethod.POST, "/api/ventas").authenticated()
-                
-                // Cualquier otra petición requiere autenticación
-                .anyRequest().authenticated()
-            );
+                .csrf(AbstractHttpConfigurer::disable)
+                .headers(headers -> headers.frameOptions(HeadersConfigurer.FrameOptionsConfig::sameOrigin))
+                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .authorizeHttpRequests(auth -> auth
+                        // Rutas públicas
+                        .requestMatchers("/api/auth/login").permitAll()
+                        .requestMatchers("/h2-console/**").permitAll()
+                        .requestMatchers("/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html").permitAll()
 
-        // Añadir el filtro JWT antes del UsernamePasswordAuthenticationFilter
+                        // Catálogo público — GET productos sin token
+                        .requestMatchers(org.springframework.http.HttpMethod.GET, "/api/productos").permitAll()
+                        .requestMatchers(org.springframework.http.HttpMethod.GET, "/api/productos/{id}").permitAll()
+
+                        // Solo ROLE_ADMIN
+                        .requestMatchers(org.springframework.http.HttpMethod.GET, "/api/ventas").hasRole("ADMIN")
+                        .requestMatchers(org.springframework.http.HttpMethod.GET, "/api/productos/alertas")
+                        .hasRole("ADMIN")
+                        .requestMatchers(org.springframework.http.HttpMethod.POST, "/api/productos").hasRole("ADMIN")
+                        .requestMatchers(org.springframework.http.HttpMethod.PUT, "/api/productos/**").hasRole("ADMIN")
+                        .requestMatchers(org.springframework.http.HttpMethod.PATCH, "/api/productos/**")
+                        .hasRole("ADMIN")
+
+                        // Autenticado cualquier rol
+                        .requestMatchers(org.springframework.http.HttpMethod.POST, "/api/ventas").authenticated()
+
+                        .anyRequest().authenticated());
+
         http.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
-
         return http.build();
     }
 }

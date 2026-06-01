@@ -22,16 +22,22 @@ export const ProtectedRoute = ({ allowedRoles }) => {
   }
 
   if (!auth.isAuthenticated) {
-    // Si no está autenticado, redirige a Login
     return <Navigate to="/login" replace />;
   }
 
-  if (allowedRoles && !allowedRoles.includes(auth.user.role)) {
-    // Si no cuenta con el rol requerido, redirige a acceso denegado
-    return <Navigate to="/denegado" replace />;
+  if (allowedRoles) {
+    // Soporta role como string ("ROLE_ADMIN") o como array (["ROLE_ADMIN"])
+    const userRoles = Array.isArray(auth.user?.roles)
+      ? auth.user.roles
+      : [auth.user?.role];
+
+    const hasRole = allowedRoles.some(r => userRoles.includes(r));
+
+    if (!hasRole) {
+      return <Navigate to="/denegado" replace />;
+    }
   }
 
-  // Renderiza las rutas hijas
   return <Outlet />;
 };
 

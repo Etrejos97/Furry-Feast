@@ -11,40 +11,37 @@ export const AuthProvider = ({ children }) => {
   });
   const [loading, setLoading] = useState(true);
 
-  // Cargar sesión del localStorage al iniciar
   useEffect(() => {
-    const token = localStorage.getItem('token');
-    const user = localStorage.getItem('user');
+    const token = localStorage.getItem('ff_token');
+    const userStr = localStorage.getItem('ff_user');
 
-    if (token && user) {
-      setAuth({
-        isAuthenticated: true,
-        token,
-        user: JSON.parse(user)
-      });
+    if (token && userStr) {
+      try {
+        setAuth({
+          isAuthenticated: true,
+          token,
+          user: JSON.parse(userStr)
+        });
+      } catch (e) {
+        localStorage.removeItem('ff_token');
+        localStorage.removeItem('ff_user');
+      }
     }
     setLoading(false);
   }, []);
 
   const login = async (email, password) => {
-    try {
-      const data = await authService.login(email, password);
-      localStorage.setItem('token', data.token);
-      localStorage.setItem('user', JSON.stringify(data.user));
-      setAuth({
-        isAuthenticated: true,
-        token: data.token,
-        user: data.user
-      });
-      return data.user;
-    } catch (error) {
-      throw error;
-    }
+    const data = await authService.login(email, password);
+    setAuth({
+      isAuthenticated: true,
+      token: data.token,
+      user: data.user
+    });
+    return data.user;
   };
 
   const logout = () => {
-    localStorage.removeItem('token');
-    localStorage.removeItem('user');
+    authService.logout();
     setAuth({
       isAuthenticated: false,
       token: null,
