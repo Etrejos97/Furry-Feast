@@ -1,37 +1,51 @@
-import { delay } from './api';
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8080/api';
 
 export const authService = {
   /**
-   * Autenticación de usuario.
-   * COMENTARIO PARA INTEGRACIÓN FUTURA CON SPRING BOOT:
-   * Reemplazar por:
-   * return fetchWithAuth('/auth/login', {
-   *   method: 'POST',
-   *   body: JSON.stringify({ email, password })
-   * });
+   * Autentica al usuario en el backend de Spring Boot.
+   * Guarda el token JWT y los datos del usuario en localStorage.
    */
   login: async (email, password) => {
-    await delay(500);
+    const response = await fetch(`${API_URL}/auth/login`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ email, password })
+    });
 
-    const users = JSON.parse(localStorage.getItem('ff_users') || '[]');
-    const user = users.find(u => u.email === email && u.password === password);
-
-    if (!user) {
-      throw new Error('Credenciales incorrectas. Verifique su correo y contraseña.');
+    if (!response.ok) {
+      const errorData = await response.json().catch(() => ({}));
+      throw new Error(errorData.message || 'Credenciales incorrectas.');
     }
 
-    // Simulamos un JWT firmando de manera básica
-    const mockToken = `mock-jwt-token-for-${user.email}-${user.role}`;
+    const data = await response.json();
     
-    return {
-      token: mockToken,
-      user: {
-        id: user.id,
-        email: user.email,
-        role: user.role,
-        nombre: user.nombre,
-        cedula: user.cedula
-      }
-    };
+    // Guardar tokens y perfil en localStorage
+    localStorage.setItem('ff_token', data.token);
+    localStorage.setItem('ff_user', JSON.stringify(data.user));
+
+    return data;
+  },
+
+  /**
+   * Remueve las credenciales locales de la sesión.
+   */
+  logout: () => {
+    localStorage.removeItem('ff_token');
+    localStorage.removeItem('ff_user');
+  },
+
+  /**
+   * Obtiene el perfil del usuario autenticado actualmente de forma síncrona.
+   */
+  getCurrentUser: () => {
+    const userStr = localStorage.getItem('ff_user');
+    if (!userStr) return null;
+    try {
+      return JSON.parse(userStr);
+    } catch (e) {
+      return null;
+    }
   }
 };

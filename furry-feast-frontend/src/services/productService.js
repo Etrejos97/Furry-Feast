@@ -1,158 +1,59 @@
-import { delay } from './api';
+import { fetchWithAuth } from './api';
 
 export const productService = {
   /**
-   * Obtiene la lista de productos paginada y filtrada.
-   * COMENTARIO PARA INTEGRACIÓN FUTURA CON SPRING BOOT:
-   * Reemplazar por:
-   * return fetchWithAuth(`/productos?page=${page}&size=${size}&search=${search}&category=${category}&showAll=${showAll}`);
+   * Obtiene la lista de productos paginada y filtrada desde la API real de Spring Boot.
    */
   getProducts: async (page = 0, size = 12, search = '', category = '', showAll = false) => {
-    await delay(300);
-
-    const products = JSON.parse(localStorage.getItem('ff_products') || '[]');
+    const searchParam = encodeURIComponent(search);
+    const categoryParam = encodeURIComponent(category);
     
-    // Filtrar por estado activo
-    let filtered = products;
-    if (!showAll) {
-      filtered = filtered.filter(p => p.activo);
-    }
-
-    // Filtrar por categoría
-    if (category) {
-      filtered = filtered.filter(p => p.categoria === category);
-    }
-
-    // Filtrar por búsqueda de nombre
-    if (search) {
-      filtered = filtered.filter(p => p.nombre.toLowerCase().includes(search.toLowerCase()));
-    }
-
-    // Paginación lógica
-    const start = page * size;
-    const end = start + size;
-    const content = filtered.slice(start, end);
-
-    return {
-      content,
-      totalPages: Math.ceil(filtered.length / size),
-      totalElements: filtered.length,
-      size,
-      number: page
-    };
+    return fetchWithAuth(
+      `/productos?page=${page}&size=${size}&search=${searchParam}&category=${categoryParam}&showAll=${showAll}`
+    );
   },
 
   /**
    * Obtiene un producto específico por ID.
-   * COMENTARIO PARA INTEGRACIÓN FUTURA CON SPRING BOOT:
-   * Reemplazar por:
-   * return fetchWithAuth(`/productos/${id}`);
    */
   getProductById: async (id) => {
-    await delay(200);
-    const products = JSON.parse(localStorage.getItem('ff_products') || '[]');
-    const product = products.find(p => p.id === parseInt(id));
-    if (!product) throw new Error('Producto no encontrado');
-    return product;
+    return fetchWithAuth(`/productos/${id}`);
   },
 
   /**
-   * Registra un nuevo producto.
-   * 
-   * COMENTARIO PARA INTEGRACIÓN FUTURA CON SPRING BOOT:
-   * El campo 'imagenUrl' se mapea directamente como un String (o VARCHAR de hasta 2048 caracteres) 
-   * en la entidad Producto en Spring Boot, siendo opcional (puede ser null).
-   * Reemplazar por:
-   * return fetchWithAuth('/productos', {
-   *   method: 'POST',
-   *   body: JSON.stringify(productData)
-   * });
+   * Registra un nuevo producto en la base de datos H2.
+   * El backend valida que el nombre sea único entre los productos activos.
    */
   createProduct: async (productData) => {
-    await delay(400);
-    const products = JSON.parse(localStorage.getItem('ff_products') || '[]');
-
-    // Validar nombre único entre productos activos
-    const nameExists = products.some(
-      p => p.activo && p.nombre.toLowerCase().trim() === productData.nombre.toLowerCase().trim()
-    );
-
-    if (nameExists) {
-      throw new Error('Ya existe un producto activo con este nombre.');
-    }
-
-    const newProduct = {
-      ...productData, // Incluye automáticamente el campo opcional imagenUrl
-      id: products.length > 0 ? Math.max(...products.map(p => p.id)) + 1 : 1,
-      activo: true
-    };
-
-    products.push(newProduct);
-    localStorage.setItem('ff_products', JSON.stringify(products));
-    return newProduct;
+    return fetchWithAuth('/productos', {
+      method: 'POST',
+      body: JSON.stringify(productData)
+    });
   },
 
   /**
-   * Actualiza un producto existente.
-   * 
-   * COMENTARIO PARA INTEGRACIÓN FUTURA CON SPRING BOOT:
-   * El campo 'imagenUrl' se actualiza como String opcional en la BD.
-   * Reemplazar por:
-   * return fetchWithAuth(`/productos/${id}`, {
-   *   method: 'PUT',
-   *   body: JSON.stringify(productData)
-   * });
+   * Actualiza un producto existente en la base de datos H2.
    */
   updateProduct: async (id, productData) => {
-    await delay(400);
-    const products = JSON.parse(localStorage.getItem('ff_products') || '[]');
-    const index = products.findIndex(p => p.id === parseInt(id));
-
-    if (index === -1) {
-      throw new Error('Producto no encontrado para actualizar.');
-    }
-
-    // Validar nombre único entre otros productos activos
-    const nameExists = products.some(
-      p => p.id !== parseInt(id) && p.activo && p.nombre.toLowerCase().trim() === productData.nombre.toLowerCase().trim()
-    );
-
-    if (nameExists) {
-      throw new Error('Ya existe otro producto activo con este nombre.');
-    }
-
-    products[index] = {
-      ...products[index],
-      ...productData // Conserva e integra el campo imagenUrl
-    };
-
-    localStorage.setItem('ff_products', JSON.stringify(products));
-    return products[index];
+    return fetchWithAuth(`/productos/${id}`, {
+      method: 'PUT',
+      body: JSON.stringify(productData)
+    });
   },
 
   /**
    * Desactiva lógicamente un producto (activo = false).
    */
   deactivateProduct: async (id) => {
-    await delay(200);
-    const products = JSON.parse(localStorage.getItem('ff_products') || '[]');
-    const index = products.findIndex(p => p.id === parseInt(id));
-
-    if (index === -1) {
-      throw new Error('Producto no encontrado para desactivar.');
-    }
-
-    products[index].activo = false;
-    localStorage.setItem('ff_products', JSON.stringify(products));
-    return products[index];
+    return fetchWithAuth(`/productos/${id}/desactivar`, {
+      method: 'PATCH'
+    });
   },
 
   /**
-   * Obtiene la lista de alertas de stock bajo.
+   * Obtiene la lista de alertas de stock bajo (stockActual <= stockMinimo).
    */
   getLowStockAlerts: async () => {
-    await delay(300);
-    const products = JSON.parse(localStorage.getItem('ff_products') || '[]');
-    return products.filter(p => p.activo && p.stockActual <= p.stockMinimo);
+    return fetchWithAuth('/productos/alertas');
   }
 };
