@@ -52,6 +52,9 @@ Para garantizar que el frontend ofrezca una experiencia de usuario sobresaliente
    * Se verificó que al guardar un producto editado en [FormularioProducto.jsx](file:///c:/Users/ediso/Desktop/Furry%20Feast/furry-feast-frontend/src/pages/admin/FormularioProducto.jsx), la redirección a `/admin/productos` reflejara la información actualizada de inmediato gracias al mutador de base de datos mock sobre `localStorage`.
 3. **Control de Flujo de Stock en Ventas:**
    * Se ajustó el control de errores en [RegistroVentas.jsx](file:///c:/Users/ediso/Desktop/Furry%20Feast/furry-feast-frontend/src/pages/admin/RegistroVentas.jsx) para asegurar que las alertas de éxito/error se limpien correctamente al realizar nuevas acciones. Se garantizó que si un producto queda con stock igual o inferior a su mínimo, este se inserte automáticamente en el widget de alertas de [DashboardAdmin.jsx](file:///c:/Users/ediso/Desktop/Furry%20Feast/furry-feast-frontend/src/pages/admin/DashboardAdmin.jsx) de forma inmediata al navegar.
+4. **Corrección de Error de Estilo en Registro de Ventas:**
+   * **Problema:** Durante la ejecución del servidor de desarrollo, la consola del navegador arrojaba un error crítico: `TypeError: Failed to set an indexed property [0] on 'CSSStyleDeclaration': Indexed property setter is not supported.` al cargar la terminal de ventas.
+   * **Solución:** Se identificó que en [RegistroVentas.jsx](file:///c:/Users/ediso/Desktop/Furry%20Feast/furry-feast-frontend/src/pages/admin/RegistroVentas.jsx), el input de cédula contenía una propiedad de estilo inválida `style={{ 0: 0 }}`. Se reemplazó por la propiedad correcta `style={{ marginBottom: 0 }}` solucionando el bug de inmediato.
 
 ---
 
@@ -71,9 +74,10 @@ rendering chunks...
 computing gzip size...
 dist/index.html                   0.47 kB │ gzip:  0.30 kB
 dist/assets/index-y1LsZXpL.css    3.78 kB │ gzip:  1.28 kB
-dist/assets/index-CAUAZwkJ.js   288.05 kB │ gzip: 86.87 kB
+dist/assets/index-Dlr6n8Dr.js   288.06 kB │ gzip: 86.87 kB
 
-✓ built in 578ms
+✓ built in 507ms
 ```
 **Estado:** **Éxito (0 Errores / 0 Advertencias)**.
 El frontend se encuentra consolidado, optimizado y 100% preparado para la integración de la API REST en la fase de backend.
+

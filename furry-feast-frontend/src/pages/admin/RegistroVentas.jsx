@@ -172,7 +172,7 @@ export const RegistroVentas = () => {
             />
           </div>
 
-          <div className="form-group" style={{ 0: 0 }}>
+          <div className="form-group" style={{ marginBottom: 0 }}>
             <label className="form-label" htmlFor="clienteCedula">Número de Cédula</label>
             <input
               type="text"
