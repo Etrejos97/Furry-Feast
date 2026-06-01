@@ -22,6 +22,14 @@ export const FormularioProducto = () => {
   const [globalError, setGlobalError] = useState('');
   const [loading, setLoading] = useState(false);
 
+  // Limpiar mensaje de error global automáticamente tras 5 segundos
+  useEffect(() => {
+    if (globalError) {
+      const timer = setTimeout(() => setGlobalError(''), 5000);
+      return () => clearTimeout(timer);
+    }
+  }, [globalError]);
+
   // Load product if editing
   const loadProduct = useCallback(async () => {
     setLoading(true);
@@ -142,9 +150,18 @@ export const FormularioProducto = () => {
           borderRadius: '8px',
           fontSize: '0.9rem',
           marginBottom: '20px',
-          fontWeight: 500
+          fontWeight: 500,
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center'
         }}>
-          ⚠️ {globalError}
+          <span>⚠️ {globalError}</span>
+          <button
+            onClick={() => setGlobalError('')}
+            style={{ background: 'none', border: 'none', color: '#b91c1c', fontWeight: 'bold', fontSize: '1.1rem', cursor: 'pointer' }}
+          >
+            ×
+          </button>
         </div>
       )}
 

@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 
 export const Login = () => {
@@ -10,7 +10,14 @@ export const Login = () => {
 
   const { login } = useAuth();
   const navigate = useNavigate();
-  const location = useLocation();
+
+  // Limpiar mensaje de error automáticamente tras 5 segundos
+  useEffect(() => {
+    if (error) {
+      const timer = setTimeout(() => setError(''), 5000);
+      return () => clearTimeout(timer);
+    }
+  }, [error]);
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -60,9 +67,18 @@ export const Login = () => {
             borderRadius: '8px',
             fontSize: '0.85rem',
             marginBottom: '16px',
-            fontWeight: 500
+            fontWeight: 500,
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'center'
           }}>
-            ⚠️ {error}
+            <span>⚠️ {error}</span>
+            <button
+              onClick={() => setError('')}
+              style={{ background: 'none', border: 'none', color: '#b91c1c', fontWeight: 'bold', fontSize: '1rem', cursor: 'pointer' }}
+            >
+              ×
+            </button>
           </div>
         )}
 

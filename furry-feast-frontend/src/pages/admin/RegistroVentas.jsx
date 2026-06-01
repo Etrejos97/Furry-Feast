@@ -23,6 +23,21 @@ export const RegistroVentas = () => {
   const [successMsg, setSuccessMsg] = useState('');
   const [loading, setLoading] = useState(false);
 
+  // Limpiar mensajes automáticamente tras 5 segundos
+  useEffect(() => {
+    if (errorMsg) {
+      const timer = setTimeout(() => setErrorMsg(''), 5000);
+      return () => clearTimeout(timer);
+    }
+  }, [errorMsg]);
+
+  useEffect(() => {
+    if (successMsg) {
+      const timer = setTimeout(() => setSuccessMsg(''), 5000);
+      return () => clearTimeout(timer);
+    }
+  }, [successMsg]);
+
   // Cargar productos activos con stock para la venta
   useEffect(() => {
     const loadProducts = async () => {
@@ -157,7 +172,7 @@ export const RegistroVentas = () => {
             />
           </div>
 
-          <div className="form-group" style={{ marginBottom: 0 }}>
+          <div className="form-group" style={{ 0: 0 }}>
             <label className="form-label" htmlFor="clienteCedula">Número de Cédula</label>
             <input
               type="text"
@@ -244,14 +259,48 @@ export const RegistroVentas = () => {
         
         {/* Alertas y confirmaciones */}
         {errorMsg && (
-          <div style={{ backgroundColor: '#fee2e2', border: '1px solid #fca5a5', color: '#b91c1c', padding: '12px', borderRadius: '8px', fontSize: '0.85rem', fontWeight: 500 }}>
-            ⚠️ {errorMsg}
+          <div style={{
+            backgroundColor: '#fee2e2',
+            border: '1px solid #fca5a5',
+            color: '#b91c1c',
+            padding: '12px',
+            borderRadius: '8px',
+            fontSize: '0.85rem',
+            fontWeight: 500,
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'center'
+          }}>
+            <span>⚠️ {errorMsg}</span>
+            <button
+              onClick={() => setErrorMsg('')}
+              style={{ background: 'none', border: 'none', color: '#b91c1c', fontWeight: 'bold', fontSize: '1rem', cursor: 'pointer' }}
+            >
+              ×
+            </button>
           </div>
         )}
 
         {successMsg && (
-          <div style={{ backgroundColor: '#d1fae5', border: '1px solid #6ee7b7', color: '#065f46', padding: '12px', borderRadius: '8px', fontSize: '0.85rem', fontWeight: 500 }}>
-            ✔️ {successMsg}
+          <div style={{
+            backgroundColor: '#d1fae5',
+            border: '1px solid #6ee7b7',
+            color: '#065f46',
+            padding: '12px',
+            borderRadius: '8px',
+            fontSize: '0.85rem',
+            fontWeight: 500,
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'center'
+          }}>
+            <span>✔️ {successMsg}</span>
+            <button
+              onClick={() => setSuccessMsg('')}
+              style={{ background: 'none', border: 'none', color: '#065f46', fontWeight: 'bold', fontSize: '1rem', cursor: 'pointer' }}
+            >
+              ×
+            </button>
           </div>
         )}
 
