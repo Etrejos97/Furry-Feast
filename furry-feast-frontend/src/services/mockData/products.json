@@ -1,0 +1,202 @@
+[
+  {
+    "id": 1,
+    "nombre": "Alimento Premium Perros Adultos 15kg",
+    "descripcion": "Nutrición completa y equilibrada para perros adultos de razas medianas y grandes.",
+    "categoria": "ALIMENTOS",
+    "precio": 45000,
+    "stockActual": 12,
+    "stockMinimo": 5,
+    "activo": true
+  },
+  {
+    "id": 2,
+    "nombre": "Alimento Gatos Castrados Salmón 3kg",
+    "descripcion": "Especialmente formulado para el control de peso de gatos castrados.",
+    "categoria": "ALIMENTOS",
+    "precio": 18500,
+    "stockActual": 3,
+    "stockMinimo": 5,
+    "activo": true
+  },
+  {
+    "id": 3,
+    "nombre": "Lantipina Antiparasitario Canino",
+    "descripcion": "Tableta masticable para la prevención y tratamiento de pulgas y garrapatas.",
+    "categoria": "MEDICAMENTOS",
+    "precio": 12000,
+    "stockActual": 15,
+    "stockMinimo": 10,
+    "activo": true
+  },
+  {
+    "id": 4,
+    "nombre": "Collar Ajustable Reflectivo Rojo",
+    "descripcion": "Collar resistente con costuras reflectivas para paseos nocturnos seguros.",
+    "categoria": "ACCESORIOS",
+    "precio": 6500,
+    "stockActual": 20,
+    "stockMinimo": 5,
+    "activo": true
+  },
+  {
+    "id": 5,
+    "nombre": "Shampoo Hipoalergénico de Avena 500ml",
+    "descripcion": "Ideal para mascotas con pieles sensibles, limpia y humecta.",
+    "categoria": "CUIDADO",
+    "precio": 9800,
+    "stockActual": 8,
+    "stockMinimo": 3,
+    "activo": true
+  },
+  {
+    "id": 6,
+    "nombre": "Snacks de Hígado Deshidratado 100g",
+    "descripcion": "Premios 100% naturales para adiestramiento y deleite de tu mascota.",
+    "categoria": "ALIMENTOS",
+    "precio": 4200,
+    "stockActual": 2,
+    "stockMinimo": 10,
+    "activo": true
+  },
+  {
+    "id": 7,
+    "nombre": "Amoxicilina Suspensión Veterinaria",
+    "descripcion": "Antibiótico de amplio espectro para infecciones bacterianas comunes.",
+    "categoria": "MEDICAMENTOS",
+    "precio": 15500,
+    "stockActual": 0,
+    "stockMinimo": 4,
+    "activo": true
+  },
+  {
+    "id": 8,
+    "nombre": "Arnés Ergonómico de Agarre Rápido",
+    "descripcion": "Arnés antitirones acolchado para mayor confort en caminatas.",
+    "categoria": "ACCESORIOS",
+    "precio": 22000,
+    "stockActual": 6,
+    "stockMinimo": 4,
+    "activo": true
+  },
+  {
+    "id": 9,
+    "nombre": "Cepillo Cardina Autolimpiable",
+    "descripcion": "Remueve el pelo muerto de perros y gatos con un solo clic.",
+    "categoria": "CUIDADO",
+    "precio": 7500,
+    "stockActual": 14,
+    "stockMinimo": 5,
+    "activo": true
+  },
+  {
+    "id": 10,
+    "nombre": "Alimento Húmedo Perro Lata Pavo 400g",
+    "descripcion": "Delicioso paté rico en proteínas para complementar la dieta diaria.",
+    "categoria": "ALIMENTOS",
+    "precio": 3100,
+    "stockActual": 25,
+    "stockMinimo": 12,
+    "activo": true
+  },
+  {
+    "id": 11,
+    "nombre": "Gotas Otológicas Limpiadoras 60ml",
+    "descripcion": "Solución para prevenir infecciones y disolver el exceso de cerumen.",
+    "categoria": "MEDICAMENTOS",
+    "precio": 8900,
+    "stockActual": 4,
+    "stockMinimo": 4,
+    "activo": true
+  },
+  {
+    "id": 12,
+    "nombre": "Rascador de Cartón para Gato Ondulado",
+    "descripcion": "Incluye hierba gatera para incentivar el rascado saludable.",
+    "categoria": "ACCESORIOS",
+    "precio": 5200,
+    "stockActual": 1,
+    "stockMinimo": 3,
+    "activo": true
+  },
+  {
+    "id": 13,
+    "nombre": "Pasta Dental Sabor Carne para Perros",
+    "descripcion": "Previene la placa, sarro y mal aliento. Apta para uso frecuente.",
+    "categoria": "CUIDADO",
+    "precio": 6000,
+    "stockActual": 9,
+    "stockMinimo": 3,
+    "activo": true
+  },
+  {
+    "id": 14,
+    "nombre": "Alimento Prescripción Renal Gatos 1.5kg",
+    "descripcion": "Dieta terapéutica para gatos con insuficiencia renal crónica.",
+    "categoria": "ALIMENTOS",
+    "precio": 24000,
+    "stockActual": 5,
+    "stockMinimo": 5,
+    "activo": true
+  },
+  {
+    "id": 15,
+    "nombre": "Antiinflamatorio Condoprotector Condrovet",
+    "descripcion": "Suplemento alimentario que protege y regenera las articulaciones.",
+    "categoria": "MEDICAMENTOS",
+    "precio": 32000,
+    "stockActual": 11,
+    "stockMinimo": 3,
+    "activo": true
+  },
+  {
+    "id": 16,
+    "nombre": "Plato de Acero Inoxidable Antideslizante",
+    "descripcion": "Tazón higiénico de 800ml con base de goma adherente.",
+    "categoria": "ACCESORIOS",
+    "precio": 4500,
+    "stockActual": 30,
+    "stockMinimo": 10,
+    "activo": true
+  },
+  {
+    "id": 17,
+    "nombre": "Arena Sanitaria Premium para Gatos 4kg",
+    "descripcion": "Arena aglomerante de bentonita natural con aroma a lavanda.",
+    "categoria": "CUIDADO",
+    "precio": 11200,
+    "stockActual": 18,
+    "stockMinimo": 8,
+    "activo": true
+  },
+  {
+    "id": 18,
+    "nombre": "Alimento Aves Mezcla Semillas 1kg",
+    "descripcion": "Alimento balanceado con mijo, alpiste y girasol para aves domésticas.",
+    "categoria": "ALIMENTOS",
+    "precio": 3800,
+    "stockActual": 8,
+    "stockMinimo": 4,
+    "activo": false
+  },
+  {
+    "id": 19,
+    "nombre": "Juguete Pelota de Goma Dental",
+    "descripcion": "Pelota masticable ultra resistente que limpia los dientes al jugar.",
+    "categoria": "ACCESORIOS",
+    "precio": 3500,
+    "stockActual": 2,
+    "stockMinimo": 6,
+    "activo": true
+  },
+  {
+    "id": 20,
+    "nombre": "Cortauñas Profesional de Acero",
+    "descripcion": "Alicate con tope de seguridad para evitar cortes profundos en garras.",
+    "categoria": "CUIDADO",
+    "precio": 5500,
+    "stockActual": 12,
+    "stockMinimo": 5,
+    "activo": true
+  }
+]
