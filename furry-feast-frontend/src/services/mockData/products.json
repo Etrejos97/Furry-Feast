@@ -7,7 +7,8 @@
     "precio": 45000,
     "stockActual": 12,
     "stockMinimo": 5,
-    "activo": true
+    "activo": true,
+    "imagenUrl": "https://images.unsplash.com/photo-1589721062230-40a202989b5c?w=500&auto=format&fit=crop&q=60"
   },
   {
     "id": 2,
@@ -17,7 +18,8 @@
     "precio": 18500,
     "stockActual": 3,
     "stockMinimo": 5,
-    "activo": true
+    "activo": true,
+    "imagenUrl": "https://images.unsplash.com/photo-1548767797-d8c844163c4c?w=500&auto=format&fit=crop&q=60"
   },
   {
     "id": 3,
@@ -27,7 +29,8 @@
     "precio": 12000,
     "stockActual": 15,
     "stockMinimo": 10,
-    "activo": true
+    "activo": true,
+    "imagenUrl": "https://images.unsplash.com/photo-1628009368231-7bb7cfcb0def?w=500&auto=format&fit=crop&q=60"
   },
   {
     "id": 4,
@@ -37,7 +40,8 @@
     "precio": 6500,
     "stockActual": 20,
     "stockMinimo": 5,
-    "activo": true
+    "activo": true,
+    "imagenUrl": "https://images.unsplash.com/photo-1576201836106-db1758fd1c97?w=500&auto=format&fit=crop&q=60"
   },
   {
     "id": 5,
@@ -47,7 +51,8 @@
     "precio": 9800,
     "stockActual": 8,
     "stockMinimo": 3,
-    "activo": true
+    "activo": true,
+    "imagenUrl": "https://images.unsplash.com/photo-1516733725897-1aa73b87c8e8?w=500&auto=format&fit=crop&q=60"
   },
   {
     "id": 6,
@@ -57,7 +62,8 @@
     "precio": 4200,
     "stockActual": 2,
     "stockMinimo": 10,
-    "activo": true
+    "activo": true,
+    "imagenUrl": "https://images.unsplash.com/photo-1596492784531-6e6eb5ea9993?w=500&auto=format&fit=crop&q=60"
   },
   {
     "id": 7,
@@ -67,7 +73,8 @@
     "precio": 15500,
     "stockActual": 0,
     "stockMinimo": 4,
-    "activo": true
+    "activo": true,
+    "imagenUrl": "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=500&auto=format&fit=crop&q=60"
   },
   {
     "id": 8,
@@ -77,7 +84,8 @@
     "precio": 22000,
     "stockActual": 6,
     "stockMinimo": 4,
-    "activo": true
+    "activo": true,
+    "imagenUrl": "https://images.unsplash.com/photo-1601758228041-f3b2795255f1?w=500&auto=format&fit=crop&q=60"
   },
   {
     "id": 9,
@@ -87,7 +95,8 @@
     "precio": 7500,
     "stockActual": 14,
     "stockMinimo": 5,
-    "activo": true
+    "activo": true,
+    "imagenUrl": "https://images.unsplash.com/photo-1541781774459-bb2af2f05b55?w=500&auto=format&fit=crop&q=60"
   },
   {
     "id": 10,
@@ -97,7 +106,8 @@
     "precio": 3100,
     "stockActual": 25,
     "stockMinimo": 12,
-    "activo": true
+    "activo": true,
+    "imagenUrl": "https://images.unsplash.com/photo-1608454509000-1959d577df0f?w=500&auto=format&fit=crop&q=60"
   },
   {
     "id": 11,
@@ -107,7 +117,8 @@
     "precio": 8900,
     "stockActual": 4,
     "stockMinimo": 4,
-    "activo": true
+    "activo": true,
+    "imagenUrl": "https://images.unsplash.com/photo-1607619056574-7b8f304b3c8a?w=500&auto=format&fit=crop&q=60"
   },
   {
     "id": 12,
@@ -117,7 +128,8 @@
     "precio": 5200,
     "stockActual": 1,
     "stockMinimo": 3,
-    "activo": true
+    "activo": true,
+    "imagenUrl": "https://images.unsplash.com/photo-1545249390-6bdfa286032f?w=500&auto=format&fit=crop&q=60"
   },
   {
     "id": 13,
@@ -127,7 +139,8 @@
     "precio": 6000,
     "stockActual": 9,
     "stockMinimo": 3,
-    "activo": true
+    "activo": true,
+    "imagenUrl": "https://images.unsplash.com/photo-1583337130417-3346a1be7dee?w=500&auto=format&fit=crop&q=60"
   },
   {
     "id": 14,
@@ -137,7 +150,8 @@
     "precio": 24000,
     "stockActual": 5,
     "stockMinimo": 5,
-    "activo": true
+    "activo": true,
+    "imagenUrl": "https://images.unsplash.com/photo-1569591159212-b02ea8a9f239?w=500&auto=format&fit=crop&q=60"
   },
   {
     "id": 15,
@@ -147,7 +161,8 @@
     "precio": 32000,
     "stockActual": 11,
     "stockMinimo": 3,
-    "activo": true
+    "activo": true,
+    "imagenUrl": "https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=500&auto=format&fit=crop&q=60"
   },
   {
     "id": 16,
@@ -157,7 +172,8 @@
     "precio": 4500,
     "stockActual": 30,
     "stockMinimo": 10,
-    "activo": true
+    "activo": true,
+    "imagenUrl": "https://images.unsplash.com/photo-1591550970193-091f9450c216?w=500&auto=format&fit=crop&q=60"
   },
   {
     "id": 17,
@@ -167,7 +183,8 @@
     "precio": 11200,
     "stockActual": 18,
     "stockMinimo": 8,
-    "activo": true
+    "activo": true,
+    "imagenUrl": "https://images.unsplash.com/photo-1592194996308-7b43878e84a6?w=500&auto=format&fit=crop&q=60"
   },
   {
     "id": 18,
@@ -177,7 +194,8 @@
     "precio": 3800,
     "stockActual": 8,
     "stockMinimo": 4,
-    "activo": false
+    "activo": false,
+    "imagenUrl": null
   },
   {
     "id": 19,
@@ -187,7 +205,8 @@
     "precio": 3500,
     "stockActual": 2,
     "stockMinimo": 6,
-    "activo": true
+    "activo": true,
+    "imagenUrl": "https://images.unsplash.com/photo-1544567822-a6f95c1c045b?w=500&auto=format&fit=crop&q=60"
   },
   {
     "id": 20,
@@ -197,6 +216,7 @@
     "precio": 5500,
     "stockActual": 12,
     "stockMinimo": 5,
-    "activo": true
+    "activo": true,
+    "imagenUrl": "https://images.unsplash.com/photo-1581888227599-779811939961?w=500&auto=format&fit=crop&q=60"
   }
 ]

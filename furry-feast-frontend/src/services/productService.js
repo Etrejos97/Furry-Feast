@@ -58,7 +58,10 @@ export const productService = {
 
   /**
    * Registra un nuevo producto.
+   * 
    * COMENTARIO PARA INTEGRACIÓN FUTURA CON SPRING BOOT:
+   * El campo 'imagenUrl' se mapea directamente como un String (o VARCHAR de hasta 2048 caracteres) 
+   * en la entidad Producto en Spring Boot, siendo opcional (puede ser null).
    * Reemplazar por:
    * return fetchWithAuth('/productos', {
    *   method: 'POST',
@@ -79,7 +82,7 @@ export const productService = {
     }
 
     const newProduct = {
-      ...productData,
+      ...productData, // Incluye automáticamente el campo opcional imagenUrl
       id: products.length > 0 ? Math.max(...products.map(p => p.id)) + 1 : 1,
       activo: true
     };
@@ -91,7 +94,9 @@ export const productService = {
 
   /**
    * Actualiza un producto existente.
+   * 
    * COMENTARIO PARA INTEGRACIÓN FUTURA CON SPRING BOOT:
+   * El campo 'imagenUrl' se actualiza como String opcional en la BD.
    * Reemplazar por:
    * return fetchWithAuth(`/productos/${id}`, {
    *   method: 'PUT',
@@ -118,7 +123,7 @@ export const productService = {
 
     products[index] = {
       ...products[index],
-      ...productData
+      ...productData // Conserva e integra el campo imagenUrl
     };
 
     localStorage.setItem('ff_products', JSON.stringify(products));
@@ -127,9 +132,6 @@ export const productService = {
 
   /**
    * Desactiva lógicamente un producto (activo = false).
-   * COMENTARIO PARA INTEGRACIÓN FUTURA CON SPRING BOOT:
-   * Reemplazar por:
-   * return fetchWithAuth(`/productos/${id}/desactivar`, { method: 'PATCH' });
    */
   deactivateProduct: async (id) => {
     await delay(200);
@@ -147,14 +149,10 @@ export const productService = {
 
   /**
    * Obtiene la lista de alertas de stock bajo.
-   * COMENTARIO PARA INTEGRACIÓN FUTURA CON SPRING BOOT:
-   * Reemplazar por:
-   * return fetchWithAuth('/productos/alertas');
    */
   getLowStockAlerts: async () => {
     await delay(300);
     const products = JSON.parse(localStorage.getItem('ff_products') || '[]');
-    // Un producto entra en alerta si es activo y stockActual <= stockMinimo
     return products.filter(p => p.activo && p.stockActual <= p.stockMinimo);
   }
 };

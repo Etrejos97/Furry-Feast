@@ -14,7 +14,8 @@ export const FormularioProducto = () => {
     categoria: '',
     precio: '',
     stockActual: '',
-    stockMinimo: ''
+    stockMinimo: '',
+    imagenUrl: '' // Campo opcional
   });
 
   // Errors State
@@ -41,7 +42,8 @@ export const FormularioProducto = () => {
         categoria: product.categoria,
         precio: product.precio.toString(),
         stockActual: product.stockActual.toString(),
-        stockMinimo: product.stockMinimo.toString()
+        stockMinimo: product.stockMinimo.toString(),
+        imagenUrl: product.imagenUrl || ''
       });
     } catch (error) {
       setGlobalError('Error cargando el producto. Verifique si el ID existe.');
@@ -96,6 +98,16 @@ export const FormularioProducto = () => {
     setGlobalError('');
   };
 
+  const getCategoryEmoji = (cat) => {
+    switch (cat) {
+      case 'ALIMENTOS': return '🍖';
+      case 'MEDICAMENTOS': return '💊';
+      case 'ACCESORIOS': return '🦮';
+      case 'CUIDADO': return '🛁';
+      default: return '🐾';
+    }
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!validateForm()) return;
@@ -110,6 +122,7 @@ export const FormularioProducto = () => {
       precio: parseFloat(formData.precio),
       stockActual: parseInt(formData.stockActual),
       stockMinimo: parseInt(formData.stockMinimo),
+      imagenUrl: formData.imagenUrl.trim() || null,
       activo: true
     };
 
@@ -270,6 +283,60 @@ export const FormularioProducto = () => {
                   disabled={loading}
                 />
                 {errors.stockMinimo && <span className="form-error-msg">{errors.stockMinimo}</span>}
+              </div>
+            </div>
+
+            {/* URL de Imagen (Opcional) */}
+            <div className="form-group" style={{ marginTop: '15px' }}>
+              <label className="form-label" htmlFor="imagenUrl">URL de la Imagen (opcional)</label>
+              <input
+                type="text"
+                id="imagenUrl"
+                className="form-input"
+                placeholder="https://images.unsplash.com/..."
+                value={formData.imagenUrl}
+                onChange={handleChange}
+                disabled={loading}
+              />
+            </div>
+
+            {/* Vista previa de la imagen */}
+            <div style={{ marginTop: '15px', display: 'flex', flexDirection: 'column', gap: '8px' }}>
+              <span className="form-label">Vista Previa:</span>
+              <div style={{
+                width: '200px',
+                height: '130px',
+                borderRadius: '8px',
+                overflow: 'hidden',
+                border: '1.5px solid #e2e8f0',
+                position: 'relative',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                backgroundColor: '#f8fafc'
+              }}>
+                {formData.imagenUrl.trim() ? (
+                  <img 
+                    src={formData.imagenUrl.trim()} 
+                    alt="Vista previa del producto"
+                    style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                    onError={(e) => {
+                      e.target.style.display = 'none';
+                      e.target.nextSibling.style.display = 'flex';
+                    }}
+                  />
+                ) : null}
+                <div style={{
+                  display: formData.imagenUrl.trim() ? 'none' : 'flex',
+                  width: '100%',
+                  height: '100%',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  fontSize: '2.5rem',
+                  backgroundColor: '#e2e8f0'
+                }}>
+                  {getCategoryEmoji(formData.categoria)}
+                </div>
               </div>
             </div>
 

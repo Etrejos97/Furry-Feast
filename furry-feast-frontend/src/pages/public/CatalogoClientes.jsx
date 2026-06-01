@@ -49,6 +49,16 @@ export const CatalogoClientes = () => {
     }
   };
 
+  const getCategoryEmoji = (cat) => {
+    switch (cat) {
+      case 'ALIMENTOS': return '🍖';
+      case 'MEDICAMENTOS': return '💊';
+      case 'ACCESORIOS': return '🦮';
+      case 'CUIDADO': return '🛁';
+      default: return '🐾';
+    }
+  };
+
   const formatPrice = (price) => {
     return new Intl.NumberFormat('es-CO', {
       style: 'currency',
@@ -142,7 +152,8 @@ export const CatalogoClientes = () => {
                   padding: '20px',
                   transition: 'transform 0.2s, box-shadow 0.2s',
                   border: '1px solid rgba(226, 232, 240, 0.8)',
-                  backgroundColor: '#ffffff'
+                  backgroundColor: '#ffffff',
+                  overflow: 'hidden'
                 }}
                 onMouseOver={e => {
                   e.currentTarget.style.transform = 'translateY(-4px)';
@@ -154,6 +165,44 @@ export const CatalogoClientes = () => {
                 }}
               >
                 <div>
+                  {/* Product Image / Placeholder */}
+                  <div style={{
+                    height: '180px',
+                    width: 'calc(100% + 40px)',
+                    margin: '-20px -20px 16px -20px',
+                    borderTopLeftRadius: '16px',
+                    borderTopRightRadius: '16px',
+                    overflow: 'hidden',
+                    position: 'relative'
+                  }}>
+                    {product.imagenUrl ? (
+                      <img 
+                        src={product.imagenUrl} 
+                        alt={product.nombre}
+                        style={{
+                          width: '100%',
+                          height: '100%',
+                          objectFit: 'cover'
+                        }}
+                        onError={(e) => {
+                          e.target.style.display = 'none';
+                          e.target.nextSibling.style.display = 'flex';
+                        }}
+                      />
+                    ) : null}
+                    <div style={{
+                      display: product.imagenUrl ? 'none' : 'flex',
+                      width: '100%',
+                      height: '100%',
+                      background: 'linear-gradient(135deg, #e0e7ff 0%, #c7d2fe 100%)',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      fontSize: '3.5rem'
+                    }}>
+                      {getCategoryEmoji(product.categoria)}
+                    </div>
+                  </div>
+
                   {/* Category & Badge */}
                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px' }}>
                     <span style={{

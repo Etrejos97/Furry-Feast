@@ -11,7 +11,6 @@ export const GestionProductos = () => {
   const loadProducts = useCallback(async () => {
     setLoading(true);
     try {
-      // Cargamos todos los productos (showAll = true) para administración
       const data = await productService.getProducts(0, 1000, search, '', true);
       setProducts(data.content);
     } catch (error) {
@@ -34,6 +33,16 @@ export const GestionProductos = () => {
       } catch (error) {
         alert(error.message || 'Error al desactivar el producto.');
       }
+    }
+  };
+
+  const getCategoryEmoji = (cat) => {
+    switch (cat) {
+      case 'ALIMENTOS': return '🍖';
+      case 'MEDICAMENTOS': return '💊';
+      case 'ACCESORIOS': return '🦮';
+      case 'CUIDADO': return '🛁';
+      default: return '🐾';
     }
   };
 
@@ -100,6 +109,7 @@ export const GestionProductos = () => {
                 color: '#475569',
                 fontWeight: 700
               }}>
+                <th style={{ padding: '16px 20px', width: '80px', textAlign: 'center' }}>Imagen</th>
                 <th style={{ padding: '16px 20px' }}>Nombre del Producto</th>
                 <th style={{ padding: '16px 20px' }}>Categoría</th>
                 <th style={{ padding: '16px 20px' }}>Precio</th>
@@ -123,20 +133,57 @@ export const GestionProductos = () => {
                   onMouseOver={e => e.currentTarget.style.backgroundColor = '#f1f5f9'}
                   onMouseOut={e => e.currentTarget.style.backgroundColor = !product.activo ? '#f8fafc' : 'transparent'}
                   >
-                    <td style={{ padding: '16px 20px', fontWeight: 600, color: product.activo ? '#1e293b' : '#94a3b8' }}>
+                    {/* Thumbnail Image Column */}
+                    <td style={{ padding: '12px 20px', textAlign: 'center', verticalAlign: 'middle' }}>
+                      <div style={{ position: 'relative', width: '40px', height: '40px', margin: '0 auto' }}>
+                        {product.imagenUrl ? (
+                          <img 
+                            src={product.imagenUrl} 
+                            alt={product.nombre}
+                            style={{
+                              width: '40px',
+                              height: '40px',
+                              borderRadius: '6px',
+                              objectFit: 'cover',
+                              display: 'block'
+                            }}
+                            onError={(e) => {
+                              e.target.style.display = 'none';
+                              e.target.nextSibling.style.display = 'flex';
+                            }}
+                          />
+                        ) : null}
+                        <div style={{
+                          display: product.imagenUrl ? 'none' : 'flex',
+                          width: '40px',
+                          height: '40px',
+                          borderRadius: '6px',
+                          backgroundColor: '#e2e8f0',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          fontSize: '1.2rem',
+                          margin: '0 auto'
+                        }}>
+                          {getCategoryEmoji(product.categoria)}
+                        </div>
+                      </div>
+                    </td>
+
+                    <td style={{ padding: '16px 20px', fontWeight: 600, color: product.activo ? '#1e293b' : '#94a3b8', verticalAlign: 'middle' }}>
                       {product.nombre}
                     </td>
-                    <td style={{ padding: '16px 20px', color: product.activo ? '#475569' : '#94a3b8', textTransform: 'uppercase', fontSize: '0.8rem', fontWeight: 600 }}>
+                    <td style={{ padding: '16px 20px', color: product.activo ? '#475569' : '#94a3b8', textTransform: 'uppercase', fontSize: '0.8rem', fontWeight: 600, verticalAlign: 'middle' }}>
                       {product.categoria}
                     </td>
-                    <td style={{ padding: '16px 20px', fontWeight: 700, color: product.activo ? '#1e293b' : '#94a3b8' }}>
+                    <td style={{ padding: '16px 20px', fontWeight: 700, color: product.activo ? '#1e293b' : '#94a3b8', verticalAlign: 'middle' }}>
                       {formatPrice(product.precio)}
                     </td>
                     <td style={{
                       padding: '16px 20px',
                       textAlign: 'center',
                       fontWeight: 700,
-                      color: !product.activo ? '#94a3b8' : isOutOfStock ? '#ef4444' : isLowStock ? '#f59e0b' : '#10b981'
+                      color: !product.activo ? '#94a3b8' : isOutOfStock ? '#ef4444' : isLowStock ? '#f59e0b' : '#10b981',
+                      verticalAlign: 'middle'
                     }}>
                       {product.stockActual} u.
                       {product.activo && isLowStock && (
@@ -145,17 +192,17 @@ export const GestionProductos = () => {
                         </span>
                       )}
                     </td>
-                    <td style={{ padding: '16px 20px', textAlign: 'center', color: product.activo ? '#475569' : '#94a3b8' }}>
+                    <td style={{ padding: '16px 20px', textAlign: 'center', color: product.activo ? '#475569' : '#94a3b8', verticalAlign: 'middle' }}>
                       {product.stockMinimo} u.
                     </td>
-                    <td style={{ padding: '16px 20px', textAlign: 'center' }}>
+                    <td style={{ padding: '16px 20px', textAlign: 'center', verticalAlign: 'middle' }}>
                       {product.activo ? (
                         <span className="badge badge-success" style={{ fontSize: '0.7rem' }}>Activo</span>
                       ) : (
                         <span className="badge badge-neutral" style={{ fontSize: '0.7rem' }}>Inactivo</span>
                       )}
                     </td>
-                    <td style={{ padding: '16px 20px', textAlign: 'center' }}>
+                    <td style={{ padding: '16px 20px', textAlign: 'center', verticalAlign: 'middle' }}>
                       <div style={{ display: 'flex', gap: '8px', justifyContent: 'center' }}>
                         <button
                           onClick={() => navigate(`/admin/productos/editar/${product.id}`)}
