@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useNavigate, useParams, Link } from 'react-router-dom';
 import { productService } from '../../services/productService';
 
@@ -7,7 +7,6 @@ export const FormularioProducto = () => {
   const navigate = useNavigate();
   const isEditMode = Boolean(id);
 
-  // Form State
   const [formData, setFormData] = useState({
     nombre: '',
     descripcion: '',
@@ -15,15 +14,13 @@ export const FormularioProducto = () => {
     precio: '',
     stockActual: '',
     stockMinimo: '',
-    imagenUrl: '' // Campo opcional
+    imagenUrl: ''
   });
 
-  // Errors State
   const [errors, setErrors] = useState({});
   const [globalError, setGlobalError] = useState('');
   const [loading, setLoading] = useState(false);
 
-  // Limpiar mensaje de error global automáticamente tras 5 segundos
   useEffect(() => {
     if (globalError) {
       const timer = setTimeout(() => setGlobalError(''), 5000);
@@ -31,7 +28,6 @@ export const FormularioProducto = () => {
     }
   }, [globalError]);
 
-  // Load product if editing
   const loadProduct = useCallback(async () => {
     setLoading(true);
     try {
@@ -45,7 +41,7 @@ export const FormularioProducto = () => {
         stockMinimo: product.stockMinimo.toString(),
         imagenUrl: product.imagenUrl || ''
       });
-    } catch (error) {
+    } catch (_error) {
       setGlobalError('Error cargando el producto. Verifique si el ID existe.');
     } finally {
       setLoading(false);
@@ -53,47 +49,39 @@ export const FormularioProducto = () => {
   }, [id]);
 
   useEffect(() => {
-    if (isEditMode) {
-      loadProduct();
-    }
-  }, [isEditMode, loadProduct]);
+  if (isEditMode) {
+    void loadProduct();
+  }
+}, [isEditMode, loadProduct]);
 
-  // Form Validation
   const validateForm = () => {
     const newErrors = {};
-
     if (!formData.nombre.trim()) newErrors.nombre = 'El nombre es obligatorio.';
     if (!formData.descripcion.trim()) newErrors.descripcion = 'La descripción es obligatoria.';
     if (!formData.categoria) newErrors.categoria = 'Seleccione una categoría.';
-    
     const precioNum = parseFloat(formData.precio);
     if (isNaN(precioNum) || precioNum <= 0) {
       newErrors.precio = 'El precio debe ser un número mayor a 0.';
     }
-
     const stockActualNum = parseInt(formData.stockActual);
     if (isNaN(stockActualNum) || stockActualNum < 0) {
       newErrors.stockActual = 'El stock actual debe ser mayor o igual a 0.';
     }
-
     const stockMinimoNum = parseInt(formData.stockMinimo);
     if (isNaN(stockMinimoNum) || stockMinimoNum < 1) {
       newErrors.stockMinimo = 'El stock mínimo debe ser al menos 1.';
     }
-
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
 
+  // FIX BUG-002: usar name en lugar de id para compatibilidad con select
   const handleChange = (e) => {
-    const { id, value } = e.target;
-    setFormData(prev => ({
-      ...prev,
-      [id]: value
-    }));
-    // Limpiar error al escribir
-    if (errors[id]) {
-      setErrors(prev => ({ ...prev, [id]: '' }));
+    const key = e.target.name || e.target.id;
+    const { value } = e.target;
+    setFormData(prev => ({ ...prev, [key]: value }));
+    if (errors[key]) {
+      setErrors(prev => ({ ...prev, [key]: '' }));
     }
     setGlobalError('');
   };
@@ -111,10 +99,8 @@ export const FormularioProducto = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!validateForm()) return;
-
     setLoading(true);
     setGlobalError('');
-
     const parsedData = {
       nombre: formData.nombre.trim(),
       descripcion: formData.descripcion.trim(),
@@ -125,7 +111,6 @@ export const FormularioProducto = () => {
       imagenUrl: formData.imagenUrl.trim() || null,
       activo: true
     };
-
     try {
       if (isEditMode) {
         await productService.updateProduct(id, parsedData);
@@ -183,12 +168,14 @@ export const FormularioProducto = () => {
           <div style={{ textAlign: 'center', color: '#4f46e5' }}>Cargando datos del producto...</div>
         ) : (
           <form onSubmit={handleSubmit}>
+
             {/* Nombre */}
             <div className="form-group">
               <label className="form-label" htmlFor="nombre">Nombre del Producto *</label>
               <input
                 type="text"
                 id="nombre"
+                name="nombre"
                 className="form-input"
                 placeholder="Ej. Concentrado para Cachorros 10kg"
                 value={formData.nombre}
@@ -203,6 +190,7 @@ export const FormularioProducto = () => {
               <label className="form-label" htmlFor="descripcion">Descripción *</label>
               <textarea
                 id="descripcion"
+                name="descripcion"
                 className="form-input"
                 placeholder="Detalla los beneficios y composición del producto..."
                 value={formData.descripcion}
@@ -218,6 +206,7 @@ export const FormularioProducto = () => {
               <label className="form-label" htmlFor="categoria">Categoría *</label>
               <select
                 id="categoria"
+                name="categoria"
                 className="form-input"
                 value={formData.categoria}
                 onChange={handleChange}
@@ -239,12 +228,12 @@ export const FormularioProducto = () => {
               gap: '20px',
               marginTop: '10px'
             }}>
-              {/* Precio */}
               <div className="form-group">
                 <label className="form-label" htmlFor="precio">Precio de Venta ($) *</label>
                 <input
                   type="number"
                   id="precio"
+                  name="precio"
                   className="form-input"
                   placeholder="0.00"
                   step="any"
@@ -255,12 +244,12 @@ export const FormularioProducto = () => {
                 {errors.precio && <span className="form-error-msg">{errors.precio}</span>}
               </div>
 
-              {/* Stock Actual */}
               <div className="form-group">
                 <label className="form-label" htmlFor="stockActual">Stock Inicial *</label>
                 <input
                   type="number"
                   id="stockActual"
+                  name="stockActual"
                   className="form-input"
                   placeholder="0"
                   value={formData.stockActual}
@@ -270,12 +259,12 @@ export const FormularioProducto = () => {
                 {errors.stockActual && <span className="form-error-msg">{errors.stockActual}</span>}
               </div>
 
-              {/* Stock Mínimo */}
               <div className="form-group">
                 <label className="form-label" htmlFor="stockMinimo">Stock Mínimo *</label>
                 <input
                   type="number"
                   id="stockMinimo"
+                  name="stockMinimo"
                   className="form-input"
                   placeholder="1"
                   value={formData.stockMinimo}
@@ -292,6 +281,7 @@ export const FormularioProducto = () => {
               <input
                 type="text"
                 id="imagenUrl"
+                name="imagenUrl"
                 className="form-input"
                 placeholder="https://images.unsplash.com/..."
                 value={formData.imagenUrl}
@@ -316,8 +306,8 @@ export const FormularioProducto = () => {
                 backgroundColor: '#f8fafc'
               }}>
                 {formData.imagenUrl.trim() ? (
-                  <img 
-                    src={formData.imagenUrl.trim()} 
+                  <img
+                    src={formData.imagenUrl.trim()}
                     alt="Vista previa del producto"
                     style={{ width: '100%', height: '100%', objectFit: 'cover' }}
                     onError={(e) => {
@@ -340,7 +330,7 @@ export const FormularioProducto = () => {
               </div>
             </div>
 
-            {/* Botones de Envío */}
+            {/* Botones */}
             <div style={{
               display: 'flex',
               justifyContent: 'flex-end',
@@ -360,6 +350,7 @@ export const FormularioProducto = () => {
                 {loading ? 'Guardando...' : 'Guardar Producto ✔'}
               </button>
             </div>
+
           </form>
         )}
       </div>

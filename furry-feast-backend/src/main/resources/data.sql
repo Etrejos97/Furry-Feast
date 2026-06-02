@@ -115,3 +115,7 @@ WHERE NOT EXISTS (SELECT 1 FROM productos WHERE id = 19);
 INSERT INTO productos (id, nombre, descripcion, categoria, precio, stock_actual, stock_minimo, activo, imagen_url)
 SELECT 20, 'Cortauñas Profesional de Acero', 'Alicate con tope de seguridad para evitar cortes profundos en garras.', 'CUIDADO', 5500.0, 12, 5, true, 'https://images.unsplash.com/photo-1581888227599-779811939961?w=500&auto=format&fit=crop&q=60'
 WHERE NOT EXISTS (SELECT 1 FROM productos WHERE id = 20);
+
+-- Reiniciar la secuencia para que los nuevos registros no colisionen con los seed
+ALTER TABLE productos ALTER COLUMN id RESTART WITH 21;
+ALTER TABLE usuarios ALTER COLUMN id RESTART WITH 4;
